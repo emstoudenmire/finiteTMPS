@@ -2,7 +2,7 @@
 Finite temperature tensor network algorithms including METTS and the ancilla/purification method.
 
 The codes were used in the article:
-["Matrix product state techniques for two-dimensional systems at finite temperature"](https://arxiv.org/abs/1705.05578), Benedikt Bruognolo, Zhenyue Zhu, Steven R. White, E.M. Stoudenmire (arxiv:[1706.05578](https://arxiv.org/abs/1705.05578))
+["Matrix product state techniques for two-dimensional systems at finite temperature"](https://arxiv.org/abs/1705.05578), Benedikt Bruognolo, Zhenyue Zhu, Steven R. White, E.M. Stoudenmire (arxiv:[1705.05578](https://arxiv.org/abs/1705.05578))
 
 # Brief description of codes
 
