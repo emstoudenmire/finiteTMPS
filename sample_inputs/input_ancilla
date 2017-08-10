@@ -1,0 +1,15 @@
+input
+{
+Nx = 12
+Ny = 4
+periodic = yes
+lattice_type = triangular
+
+beta = 0.4
+tau = 0.01
+
+maxm = 2000
+cutoff = 1E-9
+
+realstep = yes
+}
