@@ -12,6 +12,7 @@ ifdef app
 APP=$(app)
 else
 APP=triangular_metts
+APP=mpo_ancilla
 endif
 
 TENSOR_HEADERS=
