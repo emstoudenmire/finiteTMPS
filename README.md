@@ -9,6 +9,8 @@ The codes were used in the article:
 - `triangular_metts.cc`: minimally entangled typical thermal states (METTS) algorithm for the 
   triangular lattice Heisenberg model on quasi two-dimensional cylinders
 
+- `mpo_ancilla.cc`: ancilla (a.k.a. purification) algorithm for the 
+  Heisenberg model on quasi two-dimensional cylinders
 
 # Steps to build
 
