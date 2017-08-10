@@ -94,8 +94,7 @@ main(int argc, char* argv[])
     IQMPO Sz2 = makeTotSz2(sites);
   
     auto ops = HeisOps(sites,Nx,Ny,args);
-
-    auto gates1 = makeGates<IQTensor>(sites,lattice,tau,ops);
+    auto gates = makeGates<IQTensor>(sites,lattice,tau,ops);
 
     auto state = InitState(sites,"Up");
     for (int i = 1; i <= Nx; ++i)
@@ -143,7 +142,7 @@ main(int argc, char* argv[])
 
         println("Doing regular gateTEvol");
         auto cpu_time_1s = cpu_mytime();
-        gateTEvol(gates1,beta/2.,tau,psi,obs,targs);
+        gateTEvol(gates,beta/2.,tau,psi,obs,targs);
         auto cpu_time_1e = cpu_mytime();
         printfln("CPU time for generation of METTS %.14f",cpu_time_1e - cpu_time_1s);
 

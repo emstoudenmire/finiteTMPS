@@ -73,6 +73,6 @@ struct HeisOps
 
     };
 
-};
+}
 
 #endif

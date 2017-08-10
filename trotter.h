@@ -28,43 +28,46 @@ cleanGates(std::list<GateT>& gates);
 
 template<class Tensor,class BondContainer,class OpFunction>
 GateList<Tensor>
-makeGates(const SiteSet& sites,
-          const BondContainer& bonds,
+makeGates(SiteSet const& sites,
+          BondContainer const& bonds,
           Real tau,
-          OpFunction&& opf,
-          const Args& args)
+          OpFunction && opf,
+          Args const& args)
     {
     using GateT = BondGate<Tensor>;
+
+    auto ancilla_mode = args.getBool("Ancilla",false);
 
     GateList<Tensor> gates;
 
     for(const auto& b : bonds)
         {
-        const int i1 = b.s1,
-                  i2 = b.s2; 
+        int i1 = b.s1;
+        int i2 = b.s2; 
+        if(ancilla_mode)
+            {
+            i1 = 2*b.s1-1;
+            i2 = 2*b.s2-1;
+            }
 
         Tensor hh = opf(i1,i2,b.type);
 
-       // if(!hh.valid() || hh.norm() < 1E-12) continue;
         if(norm(hh) < 1E-12) continue;
-
 
         if(abs(i2-i1) == 1)
             {
             gates.push_back(GateT(sites,i1,i2,GateT::tImag,tau/2.,hh));
-
             }
         else
             {
             //Swap gates
             for(int k1 = i1; k1 <= i2-2; ++k1) 
                 {
-
                 gates.push_back(GateT(sites,k1,k1+1));
                 }
 
             //Tensor that replaces index at i1 with index at i2-1
-            Tensor II(sites.si(i1),dag(sites.si(i2-1)));
+            auto II = Tensor(sites.si(i1),dag(sites.si(i2-1)));
             for(int n = 1; n <= sites.si(i1).m(); ++n)
                 {
                 II.set(sites.si(i1)(n),sites.si(i2-1)(n),1.0);
@@ -109,10 +112,13 @@ cleanGates(std::list<GateT>& gates)
             {
             auto j = i;
             ++j;
-            if(i->type() == GateT::Swap && j->type() == GateT::Swap && i->i1() == j->i1() && i->i2() == j->i2())
+            if(i->type() == GateT::Swap && 
+               j->type() == GateT::Swap && 
+               i->i1() == j->i1() && 
+               i->i2() == j->i2())
                 {
                 success = true;
-                //std::cout << "erasing " << i->i() << " " << i->j() << std::endl;
+                //printfln("Erasing %d,%d",i->i(),i->j());
                 gates.erase(i,++j);
                 break;
                 }
@@ -120,6 +126,6 @@ cleanGates(std::list<GateT>& gates)
         }
     }
 
-}; 
+} 
 
 #endif //__TROTTER_H
